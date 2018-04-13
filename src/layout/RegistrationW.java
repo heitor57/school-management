@@ -6,11 +6,16 @@
 package layout;
 
 import classtables.Registration;
+import classtables.Student;
+import classtables.Subject;
 import com.sun.org.apache.xerces.internal.xs.StringList;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import query.RegistrationQ;
+import query.StudentQ;
+import query.SubjectQ;
 
 /**
  *
@@ -35,13 +40,23 @@ public class RegistrationW extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cb_student_id = new javax.swing.JComboBox<>();
+        cb_subject_id = new javax.swing.JComboBox<>();
         bt_delete = new javax.swing.JButton();
-        bt_id_subject = new javax.swing.JTextField();
+        txt_id_subject = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         registration_table = new javax.swing.JTable();
-        bt_id_student = new javax.swing.JTextField();
+        txt_id_student = new javax.swing.JTextField();
         bt_save = new javax.swing.JButton();
-        bt_update = new javax.swing.JButton();
+        cb_student = new javax.swing.JComboBox<>();
+        cb_subject = new javax.swing.JComboBox<>();
+        bt_clear = new javax.swing.JButton();
+
+        cb_subject_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_subject_idActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -57,10 +72,10 @@ public class RegistrationW extends javax.swing.JDialog {
             }
         });
 
-        bt_id_subject.setBorder(javax.swing.BorderFactory.createTitledBorder("Subject ID"));
-        bt_id_subject.addActionListener(new java.awt.event.ActionListener() {
+        txt_id_subject.setBorder(javax.swing.BorderFactory.createTitledBorder("Subject ID"));
+        txt_id_subject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_id_subjectActionPerformed(evt);
+                txt_id_subjectActionPerformed(evt);
             }
         });
 
@@ -84,10 +99,10 @@ public class RegistrationW extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(registration_table);
 
-        bt_id_student.setBorder(javax.swing.BorderFactory.createTitledBorder("Student ID"));
-        bt_id_student.addActionListener(new java.awt.event.ActionListener() {
+        txt_id_student.setBorder(javax.swing.BorderFactory.createTitledBorder("Student ID"));
+        txt_id_student.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_id_studentActionPerformed(evt);
+                txt_id_studentActionPerformed(evt);
             }
         });
 
@@ -98,10 +113,27 @@ public class RegistrationW extends javax.swing.JDialog {
             }
         });
 
-        bt_update.setText("Update");
-        bt_update.addActionListener(new java.awt.event.ActionListener() {
+        cb_student.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_studentItemStateChanged(evt);
+            }
+        });
+
+        cb_subject.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_subjectItemStateChanged(evt);
+            }
+        });
+        cb_subject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_updateActionPerformed(evt);
+                cb_subjectActionPerformed(evt);
+            }
+        });
+
+        bt_clear.setText("Clear");
+        bt_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_clearActionPerformed(evt);
             }
         });
 
@@ -112,21 +144,25 @@ public class RegistrationW extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(bt_id_subject, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(150, 150, 150)
-                                .addComponent(bt_update, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(bt_id_student, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(73, 73, 73)
-                                .addComponent(bt_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bt_save, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(txt_id_subject, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cb_subject, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txt_id_student, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cb_student, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29)
+                .addComponent(bt_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bt_save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bt_clear, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,14 +175,18 @@ public class RegistrationW extends javax.swing.JDialog {
                             .addComponent(bt_delete)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(bt_id_student, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_id_student, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cb_student, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bt_id_subject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bt_update))
-                .addGap(39, 39, 39)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_id_subject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cb_subject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_clear))
+                .addGap(38, 38, 38)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -157,19 +197,35 @@ public class RegistrationW extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_bt_deleteActionPerformed
 
-    private void bt_id_subjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_id_subjectActionPerformed
+    private void txt_id_subjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_id_subjectActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bt_id_subjectActionPerformed
+    }//GEN-LAST:event_txt_id_subjectActionPerformed
 
     private void registration_tableComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_registration_tableComponentAdded
 
     }//GEN-LAST:event_registration_tableComponentAdded
 
-    private void bt_id_studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_id_studentActionPerformed
+    private void txt_id_studentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_id_studentActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bt_id_studentActionPerformed
+    }//GEN-LAST:event_txt_id_studentActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        StudentQ sq = new StudentQ();
+        List<Student> slist = sq.ListStudents();
+        //Students combo box include
+        for(Student tempstudent : slist){
+            cb_student.addItem(tempstudent.getS_name());
+            cb_student_id.addItem(String.valueOf(tempstudent.getS_id()));
+        }
+        SubjectQ suq = new SubjectQ();
+        List<Subject> sulist = suq.ListSubjects();
+        //Subjects combo box include
+        for(Subject tempsubject : sulist){
+            cb_subject.addItem(tempsubject.getSu_name());
+            cb_subject_id.addItem(String.valueOf(tempsubject.getSu_id()));
+        }
+        cb_subject.setSelectedIndex(-1);
+        cb_student.setSelectedIndex(-1);
         List();
     }//GEN-LAST:event_formWindowOpened
 
@@ -178,13 +234,30 @@ public class RegistrationW extends javax.swing.JDialog {
     }//GEN-LAST:event_bt_saveActionPerformed
 
     private void registration_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registration_tableMouseClicked
-        bt_id_student.setText(String.valueOf(registration_table.getValueAt(registration_table.getSelectedRow(), 0)));
-        bt_id_subject.setText(String.valueOf(registration_table.getValueAt(registration_table.getSelectedRow(), 1)));
+        txt_id_student.setText(String.valueOf(registration_table.getValueAt(registration_table.getSelectedRow(), 0)));
+        txt_id_subject.setText(String.valueOf(registration_table.getValueAt(registration_table.getSelectedRow(), 1)));
     }//GEN-LAST:event_registration_tableMouseClicked
 
-    private void bt_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_updateActionPerformed
-        Update();
-    }//GEN-LAST:event_bt_updateActionPerformed
+    private void cb_subjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_subjectActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_subjectActionPerformed
+
+    private void cb_subject_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_subject_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cb_subject_idActionPerformed
+
+    private void cb_studentItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_studentItemStateChanged
+        txt_id_student.setText(String.valueOf(cb_student_id.getItemAt(cb_student.getSelectedIndex())));
+        
+    }//GEN-LAST:event_cb_studentItemStateChanged
+
+    private void cb_subjectItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_subjectItemStateChanged
+        txt_id_subject.setText(String.valueOf(cb_subject_id.getItemAt(cb_subject.getSelectedIndex())));
+    }//GEN-LAST:event_cb_subjectItemStateChanged
+
+    private void bt_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_clearActionPerformed
+        Clear();
+    }//GEN-LAST:event_bt_clearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,19 +305,23 @@ public class RegistrationW extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_clear;
     private javax.swing.JButton bt_delete;
-    private javax.swing.JTextField bt_id_student;
-    private javax.swing.JTextField bt_id_subject;
     private javax.swing.JButton bt_save;
-    private javax.swing.JButton bt_update;
+    private javax.swing.JComboBox<String> cb_student;
+    private javax.swing.JComboBox<String> cb_student_id;
+    private javax.swing.JComboBox<String> cb_subject;
+    private javax.swing.JComboBox<String> cb_subject_id;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable registration_table;
+    private javax.swing.JTextField txt_id_student;
+    private javax.swing.JTextField txt_id_subject;
     // End of variables declaration//GEN-END:variables
     void Save(){
         try{
             Registration student = new Registration();
-            student.setSu_id(Integer.parseInt(bt_id_subject.getText()));
-            student.setS_id(Integer.parseInt(bt_id_student.getText()));
+            student.setSu_id(Integer.parseInt(txt_id_subject.getText()));
+            student.setS_id(Integer.parseInt(txt_id_student.getText()));
             RegistrationQ q = new RegistrationQ();
             q.AddRegistration(student);
             List();
@@ -272,7 +349,8 @@ public class RegistrationW extends javax.swing.JDialog {
     void Remove(){
         try{
             Registration student = new Registration();
-            student.setS_id(Integer.parseInt(bt_id_student.getText()));
+            student.setS_id(Integer.parseInt(txt_id_student.getText()));
+            student.setSu_id(Integer.parseInt(txt_id_subject.getText()));
             RegistrationQ q = new RegistrationQ();
             q.RemoveRegistration(student);
             List();
@@ -284,13 +362,21 @@ public class RegistrationW extends javax.swing.JDialog {
     void Update(){
         try{
             Registration student = new Registration();
-            student.setS_id(Integer.parseInt(bt_id_student.getText()));
-            student.setSu_id(Integer.parseInt(bt_id_subject.getText()));
+            student.setS_id(Integer.parseInt(txt_id_student.getText()));
+            student.setSu_id(Integer.parseInt(txt_id_subject.getText()));
             RegistrationQ s = new RegistrationQ();
             s.UpdateRegistration(student);
             List();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,e);
         }
+    }
+    
+    void Clear(){
+        
+        txt_id_student.setText(null);
+        txt_id_subject.setText(null);
+        cb_student.setSelectedIndex(-1);
+        cb_subject.setSelectedIndex(-1);
     }
 }

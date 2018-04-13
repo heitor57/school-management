@@ -43,7 +43,10 @@ public class SubjectQ {
             PreparedStatement stmt = conecta.prepareStatement(cmdsql);
             stmt.setString(1, obj.getSu_name());
             stmt.setString(2, obj.getSu_description());
-            stmt.setInt(3, obj.getP_id());
+            if(obj.getP_id()!=null)
+                stmt.setInt(3, obj.getP_id());
+            else
+                stmt.setNull(3, java.sql.Types.INTEGER);
             stmt.execute();
             stmt.close();
         }catch(SQLException e){

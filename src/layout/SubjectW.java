@@ -47,6 +47,7 @@ public class SubjectW extends javax.swing.JDialog {
         bt_description = new javax.swing.JTextField();
         bt_p_id = new javax.swing.JTextField();
         cb_p_name = new javax.swing.JComboBox<>();
+        bt_clear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -137,6 +138,13 @@ public class SubjectW extends javax.swing.JDialog {
             }
         });
 
+        bt_clear.setText("Clear");
+        bt_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_clearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,7 +168,9 @@ public class SubjectW extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(bt_p_id, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cb_p_name, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cb_p_name, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bt_clear))
                             .addComponent(bt_description))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -185,10 +195,14 @@ public class SubjectW extends javax.swing.JDialog {
                 .addComponent(bt_description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(cb_p_name)
-                        .addGap(1, 1, 1))
-                    .addComponent(bt_p_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_p_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(bt_clear))
+                            .addComponent(cb_p_name))
+                        .addGap(1, 1, 1)))
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -215,9 +229,10 @@ public class SubjectW extends javax.swing.JDialog {
     }//GEN-LAST:event_bt_idActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
+
         ProfessorList();
         List();
+        cb_p_name.setSelectedIndex(-1);
     }//GEN-LAST:event_formWindowOpened
 
     private void bt_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_saveActionPerformed
@@ -249,7 +264,12 @@ public class SubjectW extends javax.swing.JDialog {
 
     private void cb_p_nameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_p_nameItemStateChanged
         bt_p_id.setText(String.valueOf(cb_p_id.getItemAt(cb_p_name.getSelectedIndex())));
+        
     }//GEN-LAST:event_cb_p_nameItemStateChanged
+
+    private void bt_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_clearActionPerformed
+        Clear();
+    }//GEN-LAST:event_bt_clearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,6 +317,7 @@ public class SubjectW extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_clear;
     private javax.swing.JButton bt_delete;
     private javax.swing.JTextField bt_description;
     private javax.swing.JTextField bt_id;
@@ -314,7 +335,12 @@ public class SubjectW extends javax.swing.JDialog {
             Subject student = new Subject();
             student.setSu_name(bt_name.getText());
             student.setSu_description(bt_description.getText());
-            student.setP_id(Integer.parseInt(bt_p_id.getText()));
+            
+            if(bt_p_id.getText().equals("null")){
+                student.setP_id(null);
+            }
+            else
+                student.setP_id(Integer.parseInt(bt_p_id.getText()));
             SubjectQ q = new SubjectQ();
             q.AddSubject(student);
             List();
@@ -380,5 +406,12 @@ public class SubjectW extends javax.swing.JDialog {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,e);
         }
+    }
+    void Clear(){
+        bt_name.setText("");
+        bt_id.setText("");
+        bt_description.setText("");
+        cb_p_name.setSelectedIndex(-1);
+        bt_p_id.setText("null");
     }
 }

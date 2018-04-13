@@ -27,7 +27,7 @@ public class RegistrationQ {
     public void RemoveRegistration(Registration obj){
         
         try{
-            String cmdsql = "delete from registration where su_id = ?, s_id = ?";
+            String cmdsql = "delete from registration where su_id = ? AND s_id = ?";
             PreparedStatement stmt = conecta.prepareStatement(cmdsql);
             stmt.setInt(1, obj.getSu_id());
             stmt.setInt(2, obj.getS_id());
@@ -70,7 +70,7 @@ public class RegistrationQ {
     public void UpdateRegistration(Registration obj){
         
         try{
-            String cmdsql = "UPDATE registration SET su_id = ?,s_id = ? WHERE su_id = ?,s_id = ?";
+            String cmdsql = "UPDATE registration SET su_id = ?,s_id = ? WHERE su_id = ? AND s_id = ?";
             PreparedStatement stmt = conecta.prepareStatement(cmdsql);
             stmt.setInt(1, obj.getSu_id());
             stmt.setInt(2, obj.getS_id());
