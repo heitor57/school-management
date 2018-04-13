@@ -215,8 +215,9 @@ public class SubjectW extends javax.swing.JDialog {
     }//GEN-LAST:event_bt_idActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        List();
+        
         ProfessorList();
+        List();
     }//GEN-LAST:event_formWindowOpened
 
     private void bt_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_saveActionPerformed
